@@ -12,7 +12,10 @@ router.post("/", async (ctx) => {
   }
   ctx.body = "";
 });
-
+// Error: sending event failed with 404 Not Found (*errors.errorString)
+router.head("/", async (ctx) => {
+  ctx.body = "";
+});
 app.use(bodyParser());
 app.use(router.routes());
 app.listen(3000);
