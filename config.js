@@ -13,4 +13,5 @@ module.exports = {
   },
   quality: 30, // 图片质量
   cover: false, // 是否覆盖原图,默认不覆盖在原图名字后面加上_mini
+  bull_concurrency: 1, // bull任务并发数
 };

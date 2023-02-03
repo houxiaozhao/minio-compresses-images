@@ -5,7 +5,7 @@ const path = require("path");
 const config = require("../config.js");
 const imageMinQueue = new Queue("imageMin", { redis: config.redis });
 sharp.cache(false);
-imageMinQueue.process(1, async (job) => {
+imageMinQueue.process(config.bull_concurrency, async (job) => {
   const { bucket, key } = job.data;
   const minioClient = new minio.Client(config.minio);
   console.time(job.id + "流处理时间");
