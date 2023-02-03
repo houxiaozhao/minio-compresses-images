@@ -12,7 +12,7 @@ imageMinQueue.process(config.bull_concurrency, async (job) => {
   const readable = await minioClient.getObject(bucket, key);
   const pipeline = sharp({ unlimited: true, sequentialRead: true }).jpeg({ quality: config.quality });
   readable.pipe(pipeline);
-  await minioClient.putObject(bucket, config.cover ? key : path.basename(key, path.extname(key)) + "_mini" + path.extname(key), pipeline, { "Content-Type": "image/jpeg", mini: "true" });
+  await minioClient.putObject(bucket, config.cover ? key : path.join(path.dirname(key), path.basename(key, path.extname(key)) + "_mini" + path.extname(key)), pipeline, { "Content-Type": "image/jpeg", mini: "true" });
   console.timeEnd(job.id + "流处理时间");
   return;
 });
