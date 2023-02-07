@@ -3,7 +3,13 @@ const sharp = require("sharp");
 const minio = require("minio");
 const path = require("path");
 const config = require("../config.js");
-const imageMinQueue = new Queue("imageMin", { redis: config.redis });
+const imageMinQueue = new Queue("imageMin", {
+  redis: config.redis,
+  defaultJobOptions: {
+    removeOnComplete: true,
+    removeOnFail: true,
+  },
+});
 sharp.cache(false);
 imageMinQueue.process(config.bull_concurrency, async (job) => {
   const { bucket, key } = job.data;
